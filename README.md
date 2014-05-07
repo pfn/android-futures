@@ -44,3 +44,4 @@ The above does the following:
    * also saves the JSON into a file
 
 All of this is chained automatically upon completion of background tasks
+_Note_: The above are all examples of methods not included in this library
