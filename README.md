@@ -5,7 +5,7 @@ See http://docs.scala-lang.org/overviews/core/futures.html
 Usage:
 
 SBT:
-`libraryDependencies += "com.hanhuy.android" %% "futures" % "0.1-SNAPSHOT"`
+`libraryDependencies += "com.hanhuy.android" % "futures" % "0.1-SNAPSHOT"`
 
 Maven:
 ```
