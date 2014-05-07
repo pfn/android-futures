@@ -4,10 +4,25 @@ See http://docs.scala-lang.org/overviews/core/futures.html
 
 Usage:
 
+SBT:
 `libraryDependencies += "com.hanhuy.android" %% "futures" % "0.1-SNAPSHOT"`
 
+Maven:
+```
+  <dependency>
+    <groupId>com.hanhuy</groupId>
+    <artifactId>android-futures</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </dependency>
+```
+
+Gradle:
+`compile 'com.hanhuy:android-futures:0.1-SNAPSHOT'`
+
+```
 import com.hanhuy.android.concurrent.Future
 import com.hanhuy.android.concurrent.Promise
+```
 
 etc.
 
