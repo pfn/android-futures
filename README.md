@@ -24,7 +24,7 @@ Future<T> fetchObject(String url, Class<T> type) {
 The above does the following:
 
 1. Fetch JSON from URL in the background
-   a. If that fails then load the JSON from a File in the background
+   * If that fails then load the JSON from a File in the background
 2. Converts the JSON into an object of type T in the background
    * also saves the JSON into a file
 
