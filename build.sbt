@@ -6,6 +6,8 @@ name := "android-futures"
 
 organization := "com.hanhuy"
 
+autoScalaLibrary := false
+
 version := "0.1-SNAPSHOT"
 
 platformTarget in Android := "android-19"
