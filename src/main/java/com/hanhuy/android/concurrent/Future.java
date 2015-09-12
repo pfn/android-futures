@@ -1,9 +1,6 @@
 package com.hanhuy.android.concurrent;
 
 import android.os.AsyncTask;
-import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +10,9 @@ import java.util.concurrent.Callable;
  * @author pfnguyen
  */
 public abstract class Future<V> implements java.util.concurrent.Future<V> {
+    public interface Function<F, T> {
+        T apply(F input);
+    }
     /**
      * Runs in background thread
      */
@@ -181,7 +181,8 @@ public abstract class Future<V> implements java.util.concurrent.Future<V> {
         }
         public static class Failure<V> extends Try<V> {
             private Failure(Throwable error) {
-                Preconditions.checkNotNull(error, "error may not be null");
+                if (error == null)
+                    throw new IllegalArgumentException("error may not be null");
                 this.error = error;
             }
             private final Throwable error;

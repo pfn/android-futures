@@ -1,26 +1,28 @@
-import android.Keys._
+androidBuildJar
 
-android.Plugin.androidBuild
+javacOptions in Compile ++= Seq("-source", "1.7", "-target", "1.7")
+
+javacOptions in (Compile,doc) += "-Xdoclint:none"
+
+javacOptions in (Compile,doc) := {
+  (javacOptions in (Compile,doc)).value.foldRight(List.empty[String]) {
+    (x, a) => if (x != "-bootclasspath") x :: a else
+      x :: a.head + java.io.File.pathSeparator +
+        (file(System.getProperty("java.home")) / "lib" / "rt.jar").getAbsolutePath :: a.tail
+  }
+}
 
 name := "android-futures"
 
 organization := "com.hanhuy"
 
-autoScalaLibrary := false
-
-version := "0.1-SNAPSHOT"
+version := "0.1"
 
 platformTarget in Android := "android-19"
 
 debugIncludesTests in Android := false
 
-javacOptions in (Compile,doc) := Nil
-
-publishArtifact in (Compile,packageBin) := true
-
-publishArtifact in (Compile,packageSrc) := true
-
-libraryDependencies += "com.google.guava" % "guava" % "17.0"
+libraryDependencies += "com.google.guava" % "guava" % "17.0" % "provided"
 
 // sonatype publishing options follow
 publishMavenStyle := true

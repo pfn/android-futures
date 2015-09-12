@@ -5,18 +5,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import com.hanhuy.android.concurrent.Future.Callback;
 
 /**
  * @author pfnguyen
@@ -27,17 +23,17 @@ public class Promise<V> extends Future<V> {
     private Promise<Void> completeUiPromise;
     private Callback<Try<V>> orElseCallback;
     private static final String TAG = "Promise";
-    private List<Callback<Try<V>>> onCompletionQueue = Lists.newArrayList();
-    private List<Callback<V>> onSuccessQueue = Lists.newCopyOnWriteArrayList();
-    private List<Callback<Throwable>> onFailureQueue = Lists.newArrayList();
+    private List<Callback<Try<V>>> onCompletionQueue = new ArrayList<>();
+    private List<Callback<V>> onSuccessQueue = new CopyOnWriteArrayList<>();
+    private List<Callback<Throwable>> onFailureQueue = new ArrayList<>();
     private V value;
     private Throwable error;
     private boolean canceled;
     private boolean done;
     private List<Pair<Promise<Object>,Function<Object,Object>>> mapped =
-            Lists.newArrayList();
+            new ArrayList<>();
     private List<Pair<Promise<Object>,Function<Object,Future<Object>>>> flatMapped =
-            Lists.newArrayList();
+            new ArrayList<>();
 
     private final static Handler handler = new Handler(Looper.getMainLooper());
 
@@ -78,7 +74,7 @@ public class Promise<V> extends Future<V> {
         for (Callback<Try<V>> cb : onCompletionQueue)
             cb.onCallback(result);
         onCompletionQueue.clear();
-        onCompletionQueue = ImmutableList.of();
+        onCompletionQueue = Collections.emptyList();
 
         if (result instanceof Try.Success) {
             for (Pair<Promise<Object>,Function<Object,Object>> pair : mapped) {
@@ -105,8 +101,8 @@ public class Promise<V> extends Future<V> {
 
         mapped.clear();
         flatMapped.clear();
-        mapped = ImmutableList.of();
-        flatMapped = ImmutableList.of();
+        mapped = Collections.emptyList();
+        flatMapped = Collections.emptyList();
         if (completeAsyncPromise != null)
             completeAsyncPromise.complete(Try.<Void>create(null, null));
     }
@@ -182,8 +178,8 @@ public class Promise<V> extends Future<V> {
         }
         onFailureQueue.clear();
         onSuccessQueue.clear();
-        onFailureQueue = ImmutableList.of();
-        onSuccessQueue = ImmutableList.of();
+        onFailureQueue = Collections.emptyList();
+        onSuccessQueue = Collections.emptyList();
         if (completeUiPromise != null)
             completeUiPromise.complete(Try.<Void>create(null, null));
     }

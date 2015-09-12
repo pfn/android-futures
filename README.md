@@ -5,19 +5,19 @@ See http://docs.scala-lang.org/overviews/core/futures.html
 Usage:
 
 SBT:
-`libraryDependencies += "com.hanhuy.android" % "futures" % "0.1-SNAPSHOT"`
+`libraryDependencies += "com.hanhuy.android" % "android-futures" % "0.1"`
 
 Maven:
 ```
   <dependency>
     <groupId>com.hanhuy</groupId>
     <artifactId>android-futures</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
   </dependency>
 ```
 
 Gradle:
-`compile 'com.hanhuy:android-futures:0.1-SNAPSHOT'`
+`compile 'com.hanhuy:android-futures:0.1'`
 
 ```
 import com.hanhuy.android.concurrent.Future
