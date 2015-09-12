@@ -16,7 +16,7 @@ name := "java-futures"
 
 organization := "com.hanhuy.android"
 
-version := "0.2"
+version := "0.3"
 
 platformTarget in Android := "android-19"
 

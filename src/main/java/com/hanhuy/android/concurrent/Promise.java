@@ -221,14 +221,24 @@ public class Promise<V> extends Future<V> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public synchronized <T> Future<T> map(Function<V, T> fn) {
-        Promise<T> promise = Promise.create();
+    public synchronized <T> Future<T> map(final Function<V, T> fn) {
+        final Promise<T> promise = Promise.create();
         if (isDone()) {
             v("Executing instant map: " + promise);
             if (error != null)
                 promise.failure(error);
-            else
-                promise.success(fn.apply(value));
+            else {
+                if (Looper.getMainLooper().getThread() != Thread.currentThread()) {
+                    promise.success(fn.apply(value));
+                } else {
+                    AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            promise.success(fn.apply(value));
+                        }
+                    });
+                }
+            }
         } else {
             // yeah, this needs to be unchecked...
             v("Queuing map: " + promise);
@@ -242,10 +252,13 @@ public class Promise<V> extends Future<V> {
     public synchronized <T> Future<T> flatMap(Function<V, Future<T>> fn) {
         Promise<T> promise = Promise.create();
         if (isDone()) {
+            // run immediately
             if (error != null) {
                 promise.failure(error);
-            } else
+            } else {
+                // doesn't need to run in background because the expectation is that the function takes no time, but the future it returns does need time
                 return fn.apply(value);
+            }
         } else
             flatMapped.add(new Pair(promise, fn));
         return promise;
