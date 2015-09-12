@@ -12,11 +12,11 @@ javacOptions in (Compile,doc) := {
   }
 }
 
-name := "android-futures"
+name := "java-futures"
 
-organization := "com.hanhuy"
+organization := "com.hanhuy.android"
 
-version := "0.1"
+version := "0.2"
 
 platformTarget in Android := "android-19"
 
