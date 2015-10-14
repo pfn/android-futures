@@ -16,11 +16,9 @@ name := "java-futures"
 
 organization := "com.hanhuy.android"
 
-version := "0.3"
+version := "0.4-SNAPSHOT"
 
 platformTarget in Android := "android-19"
-
-debugIncludesTests in Android := false
 
 libraryDependencies += "com.google.guava" % "guava" % "17.0" % "provided"
 
